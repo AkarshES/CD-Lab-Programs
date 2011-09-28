@@ -12,9 +12,9 @@ int yylex()
 {
 	int ch;
 	ch = getchar();
-	if(ch == 'a') return A;
-	else if(ch == 'b') return B;
-	else if(ch == '\n') return 0;
+	if(ch == 'a') 		return A;
+	else if(ch == 'b') 	return B;
+	else if(ch == '\n') 	return 0;
 	else return ch;
 }
 int main()
@@ -25,6 +25,6 @@ int main()
 }
 int yyerror()
 {
-	printf("String doesnt delong to grammer");
+	printf("String doesnt belong to the Grammar");
 	exit(1);
 }

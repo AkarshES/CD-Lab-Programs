@@ -1,0 +1,15 @@
+WS=13
+A=9
+NUMBER=12
+PLUS=4
+ASSIGNMENT=8
+DIGIT=11
+MINUS=5
+MULT=6
+DIV=7
+ID=10
+'/'=7
+'*'=6
+'-'=5
+':='=8
+'+'=4
