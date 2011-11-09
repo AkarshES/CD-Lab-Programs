@@ -1,0 +1,37 @@
+grammar Part2;
+
+options {
+  language = Java;
+}
+
+@header
+{
+  package com.antlr.xyz;
+  import java.util.HashMap;
+}
+
+@lexer::header {package com.antlr.xyz;}
+
+@members
+{
+  HashMap memory = new hashMap();
+}
+
+prog: stat+;
+stat : expr TERMINATOR {System.out.println($expr.value);}
+  |ID '=' expr TERMINATOR
+  {memory.put($ID.text,new Integer($expr.value));}
+  | TERMINATOR;
+  
+  expr returns [int value] : l = multExpr {$l.value;} ('+' l = multExpr{$value+=$l.value;}|'-' l = multExpr{$value -= $l.value;})*;
+  multExpr returns [int value]: l = atom{$value = $l.value;} ('*' l = atom {$value *= l.value;})*;
+  atom returns[int value]: INT {$value = Integer.parseInt($INT.text;)}
+  | ID {Integer v = (Integer)memory.get($ID.text); if(v!=null)$value = v.intValue();
+      else System.err.println("Undefined Variable"+$ID.text);}|
+      '(' l.expr ')' {$value = $l.value;};
+      
+TERMINATOR : ';';
+ID: ('A'..'Z'|'a'..'z');
+INT:'0'..'9'+;
+fragment NEWLINE:'\r'|'\n';
+WS:(' '|'\t'|NEWLINE)+ {$CHANNEL=HIDDEN;};

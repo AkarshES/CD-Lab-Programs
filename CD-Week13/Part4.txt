@@ -1,0 +1,28 @@
+package com.antlr.xyz;
+
+import org.antlr.runtime.*;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.CommonTreeNodeStream;
+
+public class testRig
+{
+public static void main(String args[]) throws Exception
+{
+  TreeDemoLexer lex = new TreeDemoLexer(new TreeDemoLexer(mew ANTLRFileStream("D:\\a.txt","UTF8"));
+  CommonTokenStream tokens = new CommonTokenStream(lex);
+  TreeDemoParser g = new TreeDemoParser(tokens);
+  try
+  {
+    TreeDemoParser.prog_return r = g.prog();
+    CommonTree t = (CommonTree)r.getTree();
+    CommonTreeNodeStream nodes = new CommonTreeNodeStream(t);
+    Eval walker = new Eval(nodes);
+    walker.prog();
+  }
+  catch(RecognitionException e)
+    {
+      e.printStackTrace();
+    }  
+   
+}
+}

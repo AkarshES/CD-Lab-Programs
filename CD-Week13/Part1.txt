@@ -1,0 +1,43 @@
+grammar TreeDemo;
+
+options {
+  language = Java;
+  output = AST;
+  ASTLabelType = ComonTree;
+}
+
+@header
+{
+  package com.antlr.xyz;
+  import java.util.HashMap;
+}
+
+@lexer::header
+{
+  package com.antlr.xyz;
+}
+
+@members
+{
+  HashMap memory = new HashMap();
+}
+
+prog:(stat{System.out.println($stat.tree.toStringTree();)})+;
+stat:expr TERMINATOR -> expr 
+| ID '=' expr TERMINATOR -> ^('=' ID expr)
+| TERMINATOR ->
+| NEWLINE ->
+;
+expr returns [int value]
+: l = multExpr
+( '+' ^ multExpr
+|'-' multExpr
+)*
+;
+multExpr returns [int value] : l=atom('*'^atom)*;
+atom returns [int value]: INT | ID | '('!expr')'!;
+TERMINATOR : ';';
+ID : ('a'..'z'|'A'..'Z')+;
+INT : '0'..'9'+;
+NEWLINE : '\r' | 'n';
+WS: (' '|'\t'|NEWLINE)+ {$channel = HIDDEN;};
